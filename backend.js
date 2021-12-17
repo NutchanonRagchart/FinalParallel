@@ -22,12 +22,9 @@ options: {
 
 var connection = new Connection(config);
 
-connection.on("connect", err => {
-  if (err) {
-    console.error(err.message);
-  } else {
-    queryDatabase();
-  }
+connection.on('connect', (err) => {
+  if (err) console.log(err.message);
+  console.log(`Database connected: ${process.env.MYSQL_HOST}`);
 });
 
 connection.connect();
