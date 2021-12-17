@@ -8,19 +8,19 @@ const { Connection, Request } = require("tedious");
 const config = {
     authentication:{
     options: {
-        userName: "shibalover", 
-        password: "LastPro12345"
+        userName: process.env.MYSQL_USERNAME, 
+        password: process.env.MYSQL_PASSWORD,
     },
     type: "default"
 },
-server: "shibarenger.database.window.net",
+server: process.env.MYSQL_HOST,
 options: {
-    database: "shibalover ",
+    database: process.env.MYSQL_DATABASE,
     encrypt: true
 }
 };
 
-const connection = new Connection(config);
+var connection = new Connection(config);
 
 connection.on("connect", err => {
   if (err) {
