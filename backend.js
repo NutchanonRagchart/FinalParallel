@@ -49,7 +49,7 @@ app.listen(3040, function () {
 });
 
 
-route.get('/allproducts/:keyword', cors(),function (req, res) {
+router.get('/allproducts/:keyword', cors(),function (req, res) {
     console.log("result page request");
     console.log("search for = " + req.params.keyword);
     let word = req.params.keyword;
