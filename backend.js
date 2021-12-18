@@ -1,13 +1,16 @@
 var cors = require('cors');
+var bp = require('body-parser');
 const path = require("path");
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
 /* Use Router object to handle routes */
 const router = express.Router();
 const { Connection, Request } = require("tedious");
 router.use(cors());
 router.use(bp.json());
 router.use(bp.urlencoded({ extended: true }));
+dotenv.config();
 
 const config = {
     authentication:{
