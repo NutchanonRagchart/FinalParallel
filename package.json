@@ -1,7 +1,6 @@
 {
   "name": "pj",
   "version": "1.0.0",
-  "description": "",
   "main": "backend.js",
   "scripts": {
     "start": "nodemon backend.js"
@@ -9,8 +8,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.2",
     "nodemon": "^2.0.15",
     "tedious": "^14.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NutchanonRagchart/FinalParallel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NutchanonRagchart/FinalParallel/issues"
+  },
+  "homepage": "https://github.com/NutchanonRagchart/FinalParallel#readme",
+  "description": ""
 }

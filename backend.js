@@ -1,10 +1,13 @@
+var cors = require('cors');
 const path = require("path");
 const express = require("express");
 const app = express();
-const route = express.Router();
 /* Use Router object to handle routes */
 const router = express.Router();
 const { Connection, Request } = require("tedious");
+router.use(cors());
+router.use(bp.json());
+router.use(bp.urlencoded({ extended: true }));
 
 const config = {
     authentication:{
@@ -41,6 +44,8 @@ router.get("/", function (req, res) {
 app.listen(3040, function () {
     console.log("Server listening at Port 3040");
 });
+
+
 route.get('/allproducts/:keyword', cors(),function (req, res) {
     console.log("result page request");
     console.log("search for = " + req.params.keyword);
@@ -74,5 +79,5 @@ route.get('/allproducts/:keyword', cors(),function (req, res) {
         })
     }
 
-
 });
+
