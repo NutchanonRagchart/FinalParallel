@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Cloth</title>
+    <link rel="stylesheet" type="text/css" href="decorade.css">
+</head>
+
+<body >
+    <header>
+        <h1>Cloth mai ja?</h1>
+        <navbar>
+            <ul>
+                <li><a class="active" href="homepage.html">Home</a></li>
+                <li><a href="female.html">Female</a></li>
+                <li><a href="male.html">Male</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="search.html">Search</a></li>
+            </ul>
+        </navbar>
+    </header>
+    <div id="output">
+
+    </div>
+    <script>
+      var h = window.location.search
+      var out = h.split("=");
+      out = out[1];
+  
+      // document.getElementById("output").innerHTML= `<h1><mark style="background-color:white"> Searching for "${out}"</mark><h1>`;
+      async function callallproduct(url, sentData = {}) {
+        let data;
+        let response = await fetch(url, {
+          method: "GET",
+        });
+        data = await response.json()
+        return data;
+      }
+      callallproduct("http://localhost:3040/allproducts/" + out).then(
+        (data) => {
+          console.log(data);
+          if (data.data.length > 0) {
+  
+            //alert(data.message);
+            console.log(data.data)
+            let output = "";
+            output += `<h1><mark style="background-color:white"> Searching for "${out}"</mark></h1>`
+            output += "<div class='container'>"
+            data.data.forEach((element) => {
+  
+              output += "<div class='card' style='width: 18rem;'>"
+              output += "<img src='" + element.pic + "' class='card-img-top' alt='card'>"
+              output += "<div class='card-body'>"
+              output += "<h4><b>" + element.Pname + "</b></h4>";
+              output += "<section class='price'>$" + element.price + "</section><br>";
+              output += "<section class='des'>" + element.pinfo + "</section><br>";
+              output += "<p><button>Add to cart</button>"
+              output += "</div>"
+              output += "</div>"
+            });
+            output += "</div>"
+  
+            ;
+            let result = document.querySelector("#output");
+            result.innerHTML += output;
+            // clearInput();
+          }
+        }
+      );
+    </script>
+
+    <footer>
+        <p1>Any issue please contract jett</p1>
+    </footer>
+</body>
+
+</html>

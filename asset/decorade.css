@@ -111,3 +111,9 @@ body{
   #g{
     color: white;
   }
+  .confirmation{
+    display: flex;
+    justify-content: center;
+   
+    flex-wrap: wrap;
+  }
