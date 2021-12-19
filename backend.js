@@ -43,57 +43,59 @@ app.listen(3040, function () {
 
 const connection = new Connection(config);
 router.get('/allproducts/:keyword', cors(), function (req, res) {
-connection.on("connect", err => {
-    if (err) {
-        console.error(err.message);
-    } else {
-        console.log("It connected");
-        
-    }
-});
-
-connection.connect();
-
     console.log("result page request");
     console.log("search for = " + req.params.keyword);
     let word = req.params.keyword;
     let result;
-    if (word != "") {
-        const request = new Request(
-            `SELECT * FROM Product WHERE Productname LIKE '%${word}%' `, (err, rowCount) => {
-                if (err) {
-                    console.error(err.message);
-                }
-                else {
-                    console.log(`${rowCount} row(s) returned`);
-                    console.log(data);
-                    result = JSON.stringify(data);
-                    console.log(result)
-                    console.log(Bigdata)
-                    // Bigdata = JSON.stringify(Bigdata)
-                    // sendR(result);
-                    return res.send({ error: false, data: Bigdata, message: 'Result of rooms444' });
-                }
+    connection.connect();
+    connection.on("connect", err => {
+        if (err) {
+            console.error(err.message);
+        } else {
+            console.log("It connected");
+            if (word != "") {
+                const request = new Request(
+                    `SELECT * FROM Product WHERE Productname LIKE '%${word}%' `, (err, rowCount) => {
+                        if (err) {
+                            console.error(err.message);
+                        }
+                        else {
+                            console.log(`${rowCount} row(s) returned`);
+                            console.log(data);
+                            result = JSON.stringify(data);
+                            console.log(result)
+                            console.log(Bigdata)
+                            // Bigdata = JSON.stringify(Bigdata)
+                            // sendR(result);
+                            return res.send({ error: false, data: Bigdata, message: 'Result of rooms444' });
+                        }
+                    }
+                );
             }
-        );
-        connection.execSql(request);
-
-        var counter = 1;
-        const data = {};
-        var Bigdata = [];
-
-        request.on("row", columns => {
-            data[counter] = {}
-            columns.forEach(column => {
-                console.log("%s\t%s", column.metadata.colName, column.value);
-                data[counter][column.metadata.colName] = column.value;
-
-            });
-            Bigdata.push(data[counter]);
-            counter += 1;
-
+            }
         });
 
-        return result;
-    }
+
+
+
+    connection.execSql(request);
+
+    var counter = 1;
+    const data = {};
+    var Bigdata = [];
+
+    request.on("row", columns => {
+        data[counter] = {}
+        columns.forEach(column => {
+            console.log("%s\t%s", column.metadata.colName, column.value);
+            data[counter][column.metadata.colName] = column.value;
+
+        });
+        Bigdata.push(data[counter]);
+        counter += 1;
+
+    });
+
+    return result;
+}
 });
