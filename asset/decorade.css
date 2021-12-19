@@ -6,6 +6,9 @@ body{
       margin: 0;
       padding: 0;
   }
+  footer{
+    text-align: center;
+  }
   h1 {
     color:white;
     text-align: center;
@@ -120,3 +123,7 @@ body{
   a{
     text-decoration: none;
   }
+#output{
+background-color: aquamarine;
+
+}

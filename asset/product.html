@@ -50,12 +50,13 @@
             data.data.forEach((element) => {
   
               output += "<div class='card' style='width: 18rem;'>"
-              output += "<img src='" + element.pic + "' class='card-img-top' alt='card'>"
+              output += "<img src='" + element.Picture + "' class='card-img-top' alt='card'>"
               output += "<div class='card-body'>"
-              output += "<h4><b>" + element.Pname + "</b></h4>";
-              output += "<section class='price'>$" + element.price + "</section><br>";
-              output += "<section class='des'>" + element.pinfo + "</section><br>";
-              output += "<p><button>Add to cart</button>"
+              output += "<h5><b>" + element.Productname  + "</b></h5>";
+              output += "<section class='des'>" + element.Detail + "</section><br>";
+              output += "<section class='size'>" + element.size + "</section><br>";
+              output += "<section class='price'>$" + element.Price + "</section><br>";
+              output += "<p><button><a href='confirmation.html' class='btn btn-primary'>purchase</a></button></div>"
               output += "</div>"
               output += "</div>"
             });
@@ -70,9 +71,11 @@
       );
     </script>
 
-    <footer>
-        <p1>Any issue please contract jett</p1>
-    </footer>
+<footer>
+  <div class="textbox">
+  <p1>Any issue please contract jett</p1>
+  </div>
+</footer>
 </body>
 
 </html>

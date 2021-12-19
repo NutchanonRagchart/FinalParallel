@@ -13,28 +13,21 @@ router.use(bp.urlencoded({ extended: true }));
 dotenv.config();
 
 const config = {
-    authentication:{
-    options: {
-        userName: process.env.MYSQL_USERNAME, 
-        password: process.env.MYSQL_PASSWORD,
+    authentication: {
+        options: {
+            userName: process.env.MYSQL_USERNAME,
+            password: process.env.MYSQL_PASSWORD,
+        },
+        type: "default"
     },
-    type: "default"
-},
-server: process.env.MYSQL_HOST,
-options: {
-    database: process.env.MYSQL_DATABASE,
-    encrypt: true
-}
+    server: process.env.MYSQL_HOST,
+    options: {
+        database: process.env.MYSQL_DATABASE,
+        encrypt: true
+    }
 };
 
-var connection = new Connection(config);
 
-connection.on('connect', (err) => {
-  if (err) console.log(err.message);
-  console.log(`Database connected: ${process.env.MYSQL_HOST}`);
-});
-
-connection.connect();
 
 app.use("/", router); // Register the router
 app.use(express.static(path.join(__dirname, '/asset')));
@@ -48,39 +41,57 @@ app.listen(3040, function () {
     console.log("Server listening at Port 3040");
 });
 
+const connection = new Connection(config);
+connection.on("connect", err => {
+    if (err) {
+        console.error(err.message);
+    } else {
+        console.log("It connected");
+    }
+});
 
-router.get('/allproducts/:keyword', cors(),function (req, res) {
+connection.connect();
+router.get('/allproducts/:keyword', cors(), function (req, res) {
     console.log("result page request");
     console.log("search for = " + req.params.keyword);
     let word = req.params.keyword;
+    let result;
     if (word != "") {
-        connection.query(`SELECT * FROM product WHERE Pname like '%${word}%'`, function (error, results) {
-            if (error) throw error;
-            else {
-
-
-                if (results.length > 0) {
-                    return res.send({
-                        error: false,
-                        data: results,
-                        message: 'Product list'
-                    });
-                } else {
-                    connection.query(`SELECT * FROM product`, function (error, results) {
-                        if (error) throw error;
-                        else {
-                            return res.send({
-                                error: false,
-                                data: results,
-                                message: 'Product list'
-                            });
-                        }
-                    })
+        const request = new Request(
+            `SELECT * FROM Product WHERE Productname LIKE '%${word}%' `, (err, rowCount) => {
+                if (err) {
+                    console.error(err.message);
+                }
+                else {
+                    console.log(`${rowCount} row(s) returned`);
+                    console.log(data);
+                    result = JSON.stringify(data);
+                    console.log(result)
+                    console.log(Bigdata)
+                    // Bigdata = JSON.stringify(Bigdata)
+                    // sendR(result);
+                    return res.send({ error: false, data: Bigdata, message: 'Result of rooms444' });
                 }
             }
+        );
+        connection.execSql(request);
 
-        })
+        var counter = 1;
+        const data = {};
+        var Bigdata = [];
+
+        request.on("row", columns => {
+            data[counter] = {}
+            columns.forEach(column => {
+                console.log("%s\t%s", column.metadata.colName, column.value);
+                data[counter][column.metadata.colName] = column.value;
+
+            });
+            Bigdata.push(data[counter]);
+            counter += 1;
+
+        });
+
+        return result;
     }
-
 });
-
