@@ -42,16 +42,18 @@ app.listen(3040, function () {
 });
 
 const connection = new Connection(config);
+router.get('/allproducts/:keyword', cors(), function (req, res) {
 connection.on("connect", err => {
     if (err) {
         console.error(err.message);
     } else {
         console.log("It connected");
+        
     }
 });
 
 connection.connect();
-router.get('/allproducts/:keyword', cors(), function (req, res) {
+
     console.log("result page request");
     console.log("search for = " + req.params.keyword);
     let word = req.params.keyword;
